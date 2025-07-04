@@ -7,7 +7,6 @@ export default function Home() {
   );
 }
 import ResumeUploader from "@/components/ResumeUploader";
-import ResultsTable from "@/components/ResultsTable";
 <div className="bg-white shadow-md p-6 rounded-lg max-w-xl mx-auto mt-10">
   <ResumeUploader />
 </div>
