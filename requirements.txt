@@ -1,0 +1,8 @@
+ # === requirements.txt ===
+fastapi
+uvicorn
+pdfminer.six
+scikit-learn
+requests
+python-multipart
+python-dotenv
