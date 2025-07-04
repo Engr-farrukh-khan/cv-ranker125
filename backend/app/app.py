@@ -11,7 +11,7 @@ app = FastAPI()
 # CORS (so frontend on Vercel can talk to backend)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # replace with Vercel domain later
+    allow_origins=["https://cv-ranker125-lqv4s59me-farrukh-noor-khans-projects.vercel.app/"],  # replace with Vercel domain later
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
