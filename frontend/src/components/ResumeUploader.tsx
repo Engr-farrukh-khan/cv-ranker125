@@ -18,8 +18,7 @@ export default function ResumeUploader() {
     try {
       const ranked = await rankResumes(files, jobDesc);
       setResults(ranked);
-    } catch (err) {
-      console.error("Failed to fetch ranking:", err);
+    } catch (_) {
       alert("Failed to fetch ranking.");
     }
     setLoading(false);
