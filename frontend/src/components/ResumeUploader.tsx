@@ -1,52 +1,55 @@
-// src/components/ResumeUploader.tsx
-'use client'
-import { useState } from 'react'
+"use client";
 
-export default function ResumeUploader({ setResults }: any) {
-  const [jobDesc, setJobDesc] = useState('')
-  const [files, setFiles] = useState<FileList | null>(null)
-  const [loading, setLoading] = useState(false)
+import { useState } from "react";
+import { rankResumes } from "@/utils/api";
+import { RankedResume } from "@/types";
+import RankingResult from "./RankingResult";
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault()
-    if (!files || !jobDesc) return alert('Please provide both fields.')
+export default function ResumeUploader() {
+  const [files, setFiles] = useState<File[]>([]);
+  const [jobDesc, setJobDesc] = useState("");
+  const [results, setResults] = useState<RankedResume[]>([]);
+  const [loading, setLoading] = useState(false);
 
-    const formData = new FormData()
-    formData.append('job_description', jobDesc)
-    Array.from(files).forEach(file => formData.append('files', file))
-
-    setLoading(true)
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/rank', {
-      method: 'POST',
-      body: formData,
-    })
-    const data = await res.json()
-    setResults(data.results)
-    setLoading(false)
-  }
+  const handleSubmit = async () => {
+    if (!files.length || !jobDesc.trim()) return alert("Please fill all fields");
+    setLoading(true);
+    try {
+      const ranked = await rankResumes(files, jobDesc);
+      setResults(ranked);
+    } catch (err) {
+      alert("Failed to fetch ranking.");
+    }
+    setLoading(false);
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 mb-6">
+    <div>
       <textarea
-        placeholder="Paste Job Description here..."
-        className="w-full p-2 border rounded"
+        className="w-full p-2 border rounded mb-4"
         rows={4}
+        placeholder="Paste job description here..."
         value={jobDesc}
-        onChange={e => setJobDesc(e.target.value)}
+        onChange={(e) => setJobDesc(e.target.value)}
       />
       <input
         type="file"
         multiple
-        onChange={e => setFiles(e.target.files)}
-        className="block"
+        accept="application/pdf"
+        onChange={(e) => setFiles(Array.from(e.target.files || []))}
+        className="mb-4"
       />
       <button
-        type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        onClick={handleSubmit}
         disabled={loading}
+        className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
-        {loading ? 'Ranking...' : 'Upload & Rank'}
+        {loading ? "Ranking..." : "Rank Resumes"}
       </button>
-    </form>
-  )
+
+      <div className="mt-6">
+        {results.length > 0 && <RankingResult results={results} />}
+      </div>
+    </div>
+  );
 }
