@@ -8,17 +8,18 @@ from typing import List
 from fastapi import FastAPI, UploadFile, File, Form
 
 app = FastAPI()
-@app.get("/")
-def read_root():
-    return {"message": "Hello from FastAPI"}
-
+# CORS (so frontend on Vercel can talk to backend)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # replace with Vercel domain later
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+def root():
+    return {"message": "Hello from FastAPI"}
 
 @app.post("/rank")
 @app.post("/rank")
