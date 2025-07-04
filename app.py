@@ -5,6 +5,7 @@ from utils.ranker import rank_resume
 from models.embedding_model import get_jd_embedding, get_resume_embedding
 from fastapi import UploadFile, File
 from typing import List
+from fastapi import FastAPI, UploadFile, File, Form
 
 app = FastAPI()
 
@@ -17,7 +18,11 @@ app.add_middleware(
 )
 
 @app.post("/rank")
-async def rank_resumes(job_description: str, files: List[UploadFile] = File(...)):
+@app.post("/rank")
+async def rank_resumes(
+    job_description: str = Form(...),
+    files: List[UploadFile] = File(...)
+):
     jd_embedding = get_jd_embedding(job_description)
     ranked = []
     for file in files:
