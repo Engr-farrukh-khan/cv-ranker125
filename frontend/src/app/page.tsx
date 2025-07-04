@@ -1,7 +1,13 @@
 export default function Home() {
   return (
-    <div className="text-3xl font-bold text-blue-500">
-      Tailwind is Working!
-    </div>
-  )
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-sky-400 to-purple-600 text-white">
+      <h1 className="text-4xl font-bold">Resume Ranker 🧠📄</h1>
+      <p className="mt-4 text-xl">Upload your resume, get instant AI-powered feedback!</p>
+    </main>
+  );
 }
+import ResumeUploader from "@/components/ResumeUploader";
+import ResultsTable from "@/components/ResultsTable";
+<div className="bg-white shadow-md p-6 rounded-lg max-w-xl mx-auto mt-10">
+  <ResumeUploader />
+</div>
