@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.utils.parser import extract_text_from_pdf
-from backend.utils.ranker import rank_resume
-from backend.models.embedding_model import get_jd_embedding, get_resume_embedding
+from utils.parser import extract_text_from_pdf
+from utils.ranker import rank_resume
+from models.embedding_model import get_jd_embedding, get_resume_embedding
 from fastapi import UploadFile, File
 from typing import List
 from fastapi import FastAPI, UploadFile, File, Form
