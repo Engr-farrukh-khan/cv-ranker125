@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState } from "react";
@@ -18,6 +19,7 @@ export default function ResumeUploader() {
       const ranked = await rankResumes(files, jobDesc);
       setResults(ranked);
     } catch (err) {
+      console.error("Failed to fetch ranking:", err);
       alert("Failed to fetch ranking.");
     }
     setLoading(false);
