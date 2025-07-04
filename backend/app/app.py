@@ -8,6 +8,9 @@ from typing import List
 from fastapi import FastAPI, UploadFile, File, Form
 
 app = FastAPI()
+@app.get("/")
+def read_root():
+    return {"message": "Hello from FastAPI"}
 
 app.add_middleware(
     CORSMiddleware,
